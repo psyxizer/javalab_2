@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Expires" content="Fri, Jan 01 1900 00:00:00 GMT">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Lang" content="en">
+<meta name="author" content="Ilya Nikolaevich Ivanov">
+<meta http-equiv="Reply-to" content="@.com">
+<meta name="generator" content="PhpED 5.8">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="creation-date" content="24/06/2024">
+<meta name="revisit-after" content="15 days">
+<title>Password manager</title>
+<!--<link rel="stylesheet" type="text/css" href="my.css">-->
+</head>
+<body>
+<hr>
+  <form action="" id="loginForm"> 
+  <table border="0">
+  <tr>
+  <td><label for="login">логин:</label></td>
+  <td><input type="text" name="login" id="login"><br></td>
+  </tr>
+  <tr>
+  <td><label for="pass">пароль:</label></td>
+  <td><input type="password" name="pass" id="pass"><br></td>
+  </tr>
+  <tr>
+  <td><label for="url">url:</label></td>
+  <td><input type="text" name="url" id="url"><br></td>
+  </tr>
+  </table>
+  <br>
+  <button type="submit">Внести запись</button>
+  
+  </form>
+
+<script>
+var index= localStorage.getItem("index");
+
+if(index==null)
+{
+    index = 0;
+}
+else
+{
+    index=parseInt(index);
+}
+
+//alert(index);
+
+let loginForm = document.getElementById("loginForm");
+
+loginForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  //alert("do some");
+  let login = document.getElementById("login");
+  let pass = document.getElementById("pass");
+  let url = document.getElementById("url");
+  
+  //alert(login.value);
+  //alert(pass.value);
+  //alert(url.value);
+  
+  const record = {
+  login: login.value, 
+  pass: pass.value,
+  url: url.value
+  };
+  
+  localStorage.setItem('rec_'+index, JSON.stringify(record));
+  index=index+1;
+  localStorage.setItem('index', (index));
+  
+  //alert("record written");
+  // handle submit
+  login.value=""
+  pass.value=""
+  url.value=""
+  location.reload();
+});
+
+arch= allStorage();
+//alert(arch.get("record"))
+//alert(JSON.stringify(arch));
+
+var out="<br><table border = '1'><tr><th>ID</th><th>login</th><th>password</th><th>url</th></tr>"
+
+
+for (var [key, value] of arch) {
+  //console.log(key + " goes " + value);
+  if(key!="index")
+  {
+    var val=JSON.parse(value);
+    out=out+"<tr><td>"+key+"</td><td>"+val.login+"</td><td>"+val.pass+"</td><td>"+val.url+"</td></tr>";
+  }
+}
+
+out=out+"</table>";
+
+document.write(out);
+
+function allStorage() {
+
+    //var archive = [],
+    var archive= new Map();
+    var keys = Object.keys(localStorage),
+        i = 0, key;
+
+    for (; key = keys[i]; i++) {
+        //archive.push( key + '=' + localStorage.getItem(key));
+        archive.set(key, localStorage.getItem(key));
+        
+    }
+
+    return archive;
+}
+</script>
+
+</body>
+</html>
