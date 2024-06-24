@@ -64,17 +64,18 @@ loginForm.addEventListener("submit", (e) => {
   //alert(login.value);
   //alert(pass.value);
   //alert(url.value);
+  if(login.value!="" && pass.value!="" && url.value!="")
+  {
+    const record = {
+    login: login.value, 
+    pass: pass.value,
+    url: url.value
+    };
   
-  const record = {
-  login: login.value, 
-  pass: pass.value,
-  url: url.value
-  };
-  
-  localStorage.setItem('rec_'+index, JSON.stringify(record));
-  index=index+1;
-  localStorage.setItem('index', (index));
-  
+    localStorage.setItem('rec_'+index, JSON.stringify(record));
+    index=index+1;
+    localStorage.setItem('index', (index));
+  }
   //alert("record written");
   // handle submit
   login.value=""
